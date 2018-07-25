@@ -1,15 +1,15 @@
 {
-  "name": "github-telegram-bot",
+  "name": "tobwise",
   "version": "1.0.0",
   "description": "A telegram bot for posting git activity on telegram.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flaviobarci/github-telegram-bot.git"
+    "url": "git+https://github.com/flaviobarci/tobwise.git"
   },
   "keywords": [
     "github",
@@ -17,11 +17,11 @@
     "bot"
   ],
   "author": "Flavio Barci",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/flaviobarci/github-telegram-bot/issues"
+    "url": "https://github.com/flaviobarci/tobwise/issues"
   },
-  "homepage": "https://github.com/flaviobarci/github-telegram-bot#readme",
+  "homepage": "https://github.com/flaviobarci/tobwise#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
