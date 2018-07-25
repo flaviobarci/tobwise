@@ -49,7 +49,7 @@ sendMessage.on('issues', (req, res) => {
     const body = req.body
 
     const lower = body.action
-    let message = `${body.issue.user.login}\n[${lower.replace(/^\w/, c => c.toUpperCase())} Issue](${body.issue.url}) "${body.issue.title}"`
+    let message = `${body.issue.user.login}\n[${lower.replace(/^\w/, c => c.toUpperCase())} Issue](${body.issue.html_url}) "${body.issue.title}"`
 
     axios
         .post(
