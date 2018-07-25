@@ -1,0 +1,32 @@
+{
+  "name": "github-telegram-bot",
+  "version": "1.0.0",
+  "description": "A telegram bot for posting git activity on telegram.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flaviobarci/github-telegram-bot.git"
+  },
+  "keywords": [
+    "github",
+    "telegram",
+    "bot"
+  ],
+  "author": "Flavio Barci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flaviobarci/github-telegram-bot/issues"
+  },
+  "homepage": "https://github.com/flaviobarci/github-telegram-bot#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3"
+  }
+}
