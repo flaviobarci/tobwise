@@ -1,7 +1,12 @@
 const server = require('./server')
 const routes = require('./routes')
+const dotenv = require('dotenv')
 
-require('dotenv').config()
+const result = dotenv.config()
+
+if (result.error) {
+    throw result.error
+}
 
 routes(server)
 
