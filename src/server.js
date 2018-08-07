@@ -1,15 +1,11 @@
-const express = require('express')
-const server = express()
-const cors = require('cors')
-const bodyParser = require('body-parser')
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 
-server.use(cors())
-server.use(bodyParser.json())
-server.use(
-    bodyParser.urlencoded({
-        extended: true
-    })
-)
+const server = express();
 
+server.use(cors());
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 
-module.exports = server
+export default server;
