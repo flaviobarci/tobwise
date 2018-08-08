@@ -7,7 +7,18 @@ sendMessage.on('push', (req, res) => {
   console.log('Push event');
   const body = req.body;
 
-  let message = `${body.head_commit.author.name}\n[New Push:](${body.compare}) "${body.head_commit.message}"`;
+  let commitMessages = "";
+  let numberOfCommits = 0;
+
+  body.commits.forEach((commit) => {
+    commitMessages += `[${commit.id.substring(0, 7)}](${commit.url}) "${commit.message}"\n`;
+    numberOfCommits++;
+  });
+
+  let message = `${body.head_commit.author.name}\n` +
+    `[New Push](${body.compare}) @ [${body.repository.full_name}](${body.repository.url})\n` +
+    `${numberOfCommits} commits.\n` +
+    `${commitMessages}`;
 
   axios
     .post(
