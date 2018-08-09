@@ -7,7 +7,7 @@ sendMessage.on('push', (req, res) => {
   console.log('Push event');
   const body = req.body;
 
-  let commitMessages = "";
+  let commitMessages = '';
   let numberOfCommits = 0;
 
   body.commits.forEach((commit) => {
@@ -46,6 +46,35 @@ sendMessage.on('issues', (req, res) => {
 
   const lower = body.action;
   let message = `${body.issue.user.login}\n[${lower.replace(/^\w/, c => c.toUpperCase())} Issue](${body.issue.html_url}) "${body.issue.title}"`;
+
+  axios
+    .post(
+      `https://api.telegram.org/bot${process.env.BOT_KEY}/sendMessage`,
+      {
+        chat_id: process.env.CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true
+      }
+    )
+    .then(() => {
+      console.log('Message posted');
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log('Error :', err);
+      res.sendStatus(500);
+    });
+});
+
+sendMessage.on('pull_request', (req, res) => {
+  console.log('pull_request');
+
+  const body = req.body;
+
+  let message = `${body.pull_request.user.login}\n` +
+    `[New Pull Request](${body.pull_request.url}) @ [${body.repository.full_name}](${body.repository.url})\n` +
+    `"${body.pull_request.title}"`;
 
   axios
     .post(
