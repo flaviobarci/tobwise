@@ -69,4 +69,23 @@ githubEvent.on('pull_request', (req, res) => {
 
 });
 
+githubEvent.on('gollum', (req, res) => {
+  console.log('Wiki');
+
+  const body = req.body;
+
+  let pageNames = '';
+
+  body.pages.forEach((page) => {
+    pageNames += `[${page.page_name}](${page.url}) ${page.action}\n`;
+  });
+
+  let message = `${body.sender.login}\n` +
+    `[New Wiki Change](${body.repository.html_url}/wiki) @ [${body.repository.full_name}](${body.repository.url})\n` +
+    `${pageNames}`;
+
+  sendMessage(req, res, message);
+
+});
+
 export default githubEvent;
