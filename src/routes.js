@@ -1,4 +1,4 @@
-import sendMessage from './events';
+import githubEvent from './events';
 
 const routes = (server) => {
   server.get('/', (req, res) => {
@@ -11,7 +11,7 @@ const routes = (server) => {
 
   server.post('/web-hook', (req, res) => {
     const event = req.headers['x-github-event'];
-    sendMessage.emit(event, req, res);
+    githubEvent.emit(event, req, res);
   });
 };
 

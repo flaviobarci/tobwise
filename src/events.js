@@ -1,9 +1,30 @@
 import EventEmitter from 'events';
 import axios from 'axios';
 
-const sendMessage = new EventEmitter();
+const githubEvent = new EventEmitter();
 
-sendMessage.on('push', (req, res) => {
+const sendMessage = (req, res, message) => {
+  axios
+    .post(
+      `https://api.telegram.org/bot${process.env.BOT_KEY}/sendMessage`,
+      {
+        chat_id: process.env.CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true
+      }
+    )
+    .then(() => {
+      console.log('Message posted');
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log('Error :', err);
+      res.sendStatus(500);
+    });
+};
+
+githubEvent.on('push', (req, res) => {
   console.log('Push event');
   const body = req.body;
 
@@ -20,55 +41,23 @@ sendMessage.on('push', (req, res) => {
     `${numberOfCommits} commits.\n` +
     `${commitMessages}`;
 
-  axios
-    .post(
-      `https://api.telegram.org/bot${process.env.BOT_KEY}/sendMessage`,
-      {
-        chat_id: process.env.CHAT_ID,
-        text: message,
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true
-      }
-    )
-    .then(() => {
-      console.log('Message posted');
-      res.sendStatus(200);
-    })
-    .catch(err => {
-      console.log('Error :', err);
-      res.sendStatus(500);
-    });
+  sendMessage(req, res, message);
+
 });
 
-sendMessage.on('issues', (req, res) => {
+githubEvent.on('issues', (req, res) => {
   console.log('Issue event');
   const body = req.body;
 
   const lower = body.action;
   let message = `${body.issue.user.login}\n[${lower.replace(/^\w/, c => c.toUpperCase())} Issue](${body.issue.html_url}) "${body.issue.title}"`;
 
-  axios
-    .post(
-      `https://api.telegram.org/bot${process.env.BOT_KEY}/sendMessage`,
-      {
-        chat_id: process.env.CHAT_ID,
-        text: message,
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true
-      }
-    )
-    .then(() => {
-      console.log('Message posted');
-      res.sendStatus(200);
-    })
-    .catch(err => {
-      console.log('Error :', err);
-      res.sendStatus(500);
-    });
+  sendMessage(req, res, message);
+
 });
 
-sendMessage.on('pull_request', (req, res) => {
-  console.log('pull_request');
+githubEvent.on('pull_request', (req, res) => {
+  console.log('Pull Request');
 
   const body = req.body;
 
@@ -76,24 +65,8 @@ sendMessage.on('pull_request', (req, res) => {
     `[New Pull Request](${body.pull_request.url}) @ [${body.repository.full_name}](${body.repository.url})\n` +
     `"${body.pull_request.title}"`;
 
-  axios
-    .post(
-      `https://api.telegram.org/bot${process.env.BOT_KEY}/sendMessage`,
-      {
-        chat_id: process.env.CHAT_ID,
-        text: message,
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true
-      }
-    )
-    .then(() => {
-      console.log('Message posted');
-      res.sendStatus(200);
-    })
-    .catch(err => {
-      console.log('Error :', err);
-      res.sendStatus(500);
-    });
+  sendMessage(req, res, message);
+
 });
 
-export default sendMessage;
+export default githubEvent;
