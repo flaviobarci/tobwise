@@ -5,6 +5,10 @@ const routes = (server) => {
     res.sendStatus(200);
   });
 
+  server.post('/new-message', (req, res) =>{
+    console.log(req.body);
+  });
+
   server.get('/web-hook', (req, res) => {
     res.sendStatus(200);
   });

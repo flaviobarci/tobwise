@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import axios from 'axios';
 
-const githubEvent = new EventEmitter();
+const githubEvent = new EventEmitter.EventEmitter();
 
 const sendMessage = (req, res, message) => {
   axios
